@@ -108,6 +108,8 @@ class dataframe(UIElement[dict[str, Any], DataFrameType]):
             Defaults to True.
         download_csv_encoding (str, optional): Encoding used when downloading CSV.
             Defaults to "utf-8". Set to "utf-8-sig" to include BOM for Excel.
+        download_json_encoding (str, optional): Encoding used when downloading JSON.
+            Defaults to "utf-8".
         download_json_ensure_ascii (bool, optional): Whether to escape non-ASCII characters
             in JSON downloads. Defaults to True.
         on_change (Optional[Callable[[DataFrameType], None]], optional): Optional callback
@@ -124,6 +126,7 @@ class dataframe(UIElement[dict[str, Any], DataFrameType]):
         limit: Optional[int] = None,
         show_download: bool = True,
         download_csv_encoding: str = "utf-8",
+        download_json_encoding: str = "utf-8",
         download_json_ensure_ascii: bool = True,
     ) -> None:
         validate_no_integer_columns(df)
@@ -152,6 +155,7 @@ class dataframe(UIElement[dict[str, Any], DataFrameType]):
         self._dataframe_name = dataframe_name
         self._data = df
         self._download_csv_encoding = download_csv_encoding
+        self._download_json_encoding = download_json_encoding
         self._download_json_ensure_ascii = download_json_ensure_ascii
         self._handler = handler
         self._manager = self._get_cached_table_manager(df, self._limit)
@@ -177,6 +181,7 @@ class dataframe(UIElement[dict[str, Any], DataFrameType]):
                 "show-download": show_download,
                 # Reserved for future frontend use (encoding-aware downloads)
                 "download-csv-encoding": download_csv_encoding,
+                "download-json-encoding": download_json_encoding,
                 "download-json-ensure-ascii": download_json_ensure_ascii,
             },
             functions=(
@@ -318,6 +323,7 @@ class dataframe(UIElement[dict[str, Any], DataFrameType]):
             manager,
             args.format,
             csv_encoding=self._download_csv_encoding,
+            json_encoding=self._download_json_encoding,
             json_ensure_ascii=self._download_json_ensure_ascii,
         )
 

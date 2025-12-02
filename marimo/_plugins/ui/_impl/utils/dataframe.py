@@ -33,6 +33,7 @@ def download_as(
     ext: str,
     drop_marimo_index: bool = False,
     csv_encoding: str | None = "utf-8",
+    json_encoding: str | None = "utf-8",
     json_ensure_ascii: bool = True,
 ) -> str:
     """Download the table data in the specified format.
@@ -44,6 +45,8 @@ def download_as(
             Defaults to False.
         csv_encoding (str | None, optional): Encoding used when generating CSV bytes.
             Defaults to "utf-8". Ignored for non-CSV formats.
+        json_encoding (str | None, optional): Encoding used when generating JSON bytes.
+            Defaults to "utf-8".
         json_ensure_ascii (bool, optional): Whether to escape non-ASCII characters
             in JSON output. Defaults to True.
 
@@ -64,7 +67,9 @@ def download_as(
         # Use strict JSON to ensure compliance with JSON spec
         return mo_data.json(
             manager.to_json(
-                encoding=None, ensure_ascii=json_ensure_ascii, strict_json=True
+                encoding=json_encoding,
+                ensure_ascii=json_ensure_ascii,
+                strict_json=True,
             )
         ).url
     elif ext == "parquet":
