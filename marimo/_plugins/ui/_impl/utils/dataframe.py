@@ -67,9 +67,9 @@ def download_as(
         # Use strict JSON to ensure compliance with JSON spec
         return mo_data.json(
             manager.to_json(
+                strict_json=True,
                 encoding=json_encoding,
                 ensure_ascii=json_ensure_ascii,
-                strict_json=True,
             )
         ).url
     elif ext == "parquet":

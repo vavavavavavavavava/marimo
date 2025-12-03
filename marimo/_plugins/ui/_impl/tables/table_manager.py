@@ -130,8 +130,8 @@ class TableManager(abc.ABC, Generic[T]):
         resolved_encoding = encoding or "utf-8"
         return self.to_json_str(
             format_mapping=format_mapping,
-            ensure_ascii=ensure_ascii,
             strict_json=strict_json,
+            ensure_ascii=ensure_ascii,
         ).encode(resolved_encoding)
 
     @abc.abstractmethod
